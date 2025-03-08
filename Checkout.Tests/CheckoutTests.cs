@@ -22,39 +22,15 @@ public class CheckoutTests
         Assert.That(total, Is.Zero);
     }
 
-    [Test]
-    public void Scan_WithASingleItemA_AddsItemAToTheCheckout()
+    [TestCase("A", 50)]
+    [TestCase("B", 30)]
+    [TestCase("C", 20)]
+    [TestCase("D", 15)]
+    public void Scan_WithASingleItem_AddsItemToTheCheckout(string itemSku, decimal itemPrice)
     {
-        _checkout.Scan("A");
+        _checkout.Scan(itemSku);
 
         var total = _checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(_itemA.Price));
-    }
-
-    [Test]
-    public void Scan_WithASingleItemB_AddsItemBToTheCheckout()
-    {
-        _checkout.Scan("B");
-
-        var total = _checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(_itemB.Price));
-    }
-
-    [Test]
-    public void Scan_WithASingleItemC_AddsItemCToTheCheckout()
-    {
-        _checkout.Scan("C");
-
-        var total = _checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(_itemC.Price));
-    }
-
-    [Test]
-    public void Scan_WithASingleItemD_AddsItemDToTheCheckout()
-    {
-        _checkout.Scan("D");
-
-        var total = _checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(_itemD.Price));
+        Assert.That(total, Is.EqualTo(itemPrice));
     }
 }
