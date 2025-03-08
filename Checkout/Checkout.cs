@@ -18,6 +18,18 @@ public class ItemB : Item
     public decimal Price { get { return 30m; } }
 }
 
+public class ItemC : Item
+{
+    public string Sku { get { return "C"; } }
+    public decimal Price { get { return 20m; } }
+}
+
+public class ItemD : Item
+{
+    public string Sku { get { return "D"; } }
+    public decimal Price { get { return 15m; } }
+}
+
 public class Checkout
 {
     private readonly IEnumerable<Item> _availableItems = new List<Item>();
