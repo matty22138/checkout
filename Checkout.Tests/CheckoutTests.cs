@@ -2,40 +2,40 @@
 
 public class CheckoutTests
 {
+    private readonly Item _itemA = new ItemA();
+    private readonly Item _itemB = new ItemB();
+    private Checkout _checkout;
+
+
     [SetUp]
     public void Setup()
     {
+        _checkout = new Checkout([_itemA, _itemB]);
     }
 
     [Test]
     public void GetTotalPrice_WhenNoItemsScanned_ReturnsZero()
     {
-        var checkout = new Checkout([new ItemA(), new ItemB()]);
-
-        var total = checkout.GetTotalPrice();
+        var total = _checkout.GetTotalPrice();
 
         Assert.That(total, Is.Zero);
     }
 
     [Test]
-    public void Scan_WithASingleItemA_AddsItemToTheCheckout()
+    public void Scan_WithASingleItemA_AddsItemAToTheCheckout()
     {
-        var checkout = new Checkout([new ItemA(), new ItemB()]);
+        _checkout.Scan("A");
 
-        checkout.Scan("A");
-
-        var total = checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(50m));
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(_itemA.Price));
     }
 
     [Test]
-    public void Scan_WithASingleItemB_AddsItemToTheCheckout()
+    public void Scan_WithASingleItemB_AddsItemBToTheCheckout()
     {
-        var checkout = new Checkout([new ItemA(), new ItemB()]);
+        _checkout.Scan("B");
 
-        checkout.Scan("B");
-
-        var total = checkout.GetTotalPrice();
-        Assert.That(total, Is.EqualTo(30m));
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(_itemB.Price));
     }
 }
