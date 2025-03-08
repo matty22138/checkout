@@ -1,4 +1,4 @@
 public class UnrecognizedItemException : Exception
 {
-    public UnrecognizedItemException(string message) : base(message) { }
+    public UnrecognizedItemException(char sku) : base($"Cannot recognize item {sku}.") { }
 }

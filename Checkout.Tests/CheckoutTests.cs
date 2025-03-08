@@ -22,11 +22,11 @@ public class CheckoutTests
         Assert.That(total, Is.Zero);
     }
 
-    [TestCase("A", 50)]
-    [TestCase("B", 30)]
-    [TestCase("C", 20)]
-    [TestCase("D", 15)]
-    public void Scan_WithASingleItem_AddsItemToTheCheckout(string itemSku, decimal itemPrice)
+    [TestCase('A', 50)]
+    [TestCase('B', 30)]
+    [TestCase('C', 20)]
+    [TestCase('D', 15)]
+    public void Scan_WithASingleItem_AddsItemToTheCheckout(char itemSku, decimal itemPrice)
     {
         _checkout.Scan(itemSku);
 
@@ -47,7 +47,7 @@ public class CheckoutTests
     [Test]
     public void Scan_WithUnrecognizedItem_ThrowsErrorIndicatingThatItemIsUnrecognized()
     {
-        var ex = Assert.Throws<UnrecognizedItemException>(() => _checkout.Scan("Y"));
+        var ex = Assert.Throws<UnrecognizedItemException>(() => _checkout.Scan('Y'));
         Assert.That(ex.Message, Is.EqualTo("Cannot recognize item Y."));
     }
 }
