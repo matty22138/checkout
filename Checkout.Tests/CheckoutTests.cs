@@ -33,4 +33,14 @@ public class CheckoutTests
         var total = _checkout.GetTotalPrice();
         Assert.That(total, Is.EqualTo(itemPrice));
     }
+
+    [Test]
+    public void Scan_WithMultipleItems_AddsMultipleItemsAndTotalsTheirPrices()
+    {
+        _checkout.Scan(_itemA.Sku);
+        _checkout.Scan(_itemB.Sku);
+
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(80m));
+    }
 }
