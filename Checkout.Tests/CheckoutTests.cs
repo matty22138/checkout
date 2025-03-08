@@ -10,7 +10,7 @@ public class CheckoutTests
     [Test]
     public void GetTotalPrice_WhenNoItemsScanned_ReturnsZero()
     {
-        var checkout = new Checkout();
+        var checkout = new Checkout([new ItemA(), new ItemB()]);
 
         var total = checkout.GetTotalPrice();
 
@@ -20,7 +20,7 @@ public class CheckoutTests
     [Test]
     public void Scan_WithASingleItemA_AddsItemToTheCheckout()
     {
-        var checkout = new Checkout();
+        var checkout = new Checkout([new ItemA(), new ItemB()]);
 
         checkout.Scan("A");
 
@@ -31,7 +31,7 @@ public class CheckoutTests
     [Test]
     public void Scan_WithASingleItemB_AddsItemToTheCheckout()
     {
-        var checkout = new Checkout();
+        var checkout = new Checkout([new ItemA(), new ItemB()]);
 
         checkout.Scan("B");
 

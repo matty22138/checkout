@@ -1,8 +1,32 @@
 ﻿namespace Checkout;
 
+public interface Item
+{
+    public string Sku { get; }
+    public decimal Price { get; }
+}
+
+public class ItemA : Item
+{
+    public string Sku { get { return "A"; } }
+    public decimal Price { get { return 50m; } }
+}
+
+public class ItemB : Item
+{
+    public string Sku { get { return "B"; } }
+    public decimal Price { get { return 30m; } }
+}
+
 public class Checkout
 {
-    private readonly List<string> _scannedItems = new List<string>();
+    private readonly IEnumerable<Item> _availableItems = new List<Item>();
+    private readonly IList<string> _scannedItems = new List<string>();
+
+    public Checkout(IEnumerable<Item> availableItems)
+    {
+        _availableItems = availableItems;
+    }
 
     public void Scan(string sku)
     {
@@ -13,12 +37,8 @@ public class Checkout
     {
         if (_scannedItems.Any())
         {
-            if (_scannedItems.First() == "B")
-            {
-                return 30m;
-            }
-
-            return 50m;
+            var scannedItem = _availableItems.First((i) => i.Sku == _scannedItems[0]);
+            return scannedItem.Price;
         }
 
         return 0;
