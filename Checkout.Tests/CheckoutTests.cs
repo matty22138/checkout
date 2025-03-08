@@ -43,4 +43,11 @@ public class CheckoutTests
         var total = _checkout.GetTotalPrice();
         Assert.That(total, Is.EqualTo(80m));
     }
+
+    [Test]
+    public void Scan_WithUnrecognizedItem_ThrowsErrorIndicatingThatItemIsUnrecognized()
+    {
+        var ex = Assert.Throws<UnrecognizedItemException>(() => _checkout.Scan("Z"));
+        Assert.That(ex.Message, Is.EqualTo("Cannot recognize item Z."));
+    }
 }
