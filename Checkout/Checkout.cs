@@ -2,18 +2,17 @@
 
 public class Checkout
 {
-    private readonly IEnumerable<Item> _availableItems = new List<Item>();
-    private readonly IList<char> _scannedSkus = new List<char>();
+    private readonly IEnumerable<Item> _itemsOnSale = new List<Item>();
     private readonly IList<Item> _scannedItems = new List<Item>();
 
     public Checkout(IEnumerable<Item> availableItems)
     {
-        _availableItems = availableItems;
+        _itemsOnSale = availableItems;
     }
 
     public void Scan(char sku)
     {
-        var scannedItem = _availableItems.FirstOrDefault((i) => i.Sku == sku);
+        var scannedItem = _itemsOnSale.FirstOrDefault((i) => i.Sku == sku);
 
         if (scannedItem == null)
         {
@@ -21,7 +20,7 @@ public class Checkout
         }
         else
         {
-            _scannedSkus.Add(sku);
+            _scannedItems.Add(scannedItem);
         }
     }
 
@@ -29,9 +28,8 @@ public class Checkout
     {
         var totalPrice = 0m;
 
-        foreach (var sku in _scannedSkus)
+        foreach (var scannedItem in _scannedItems)
         {
-            var scannedItem = _availableItems.First((i) => i.Sku == sku);
             totalPrice += scannedItem.Price;
         }
 
