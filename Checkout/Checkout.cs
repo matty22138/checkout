@@ -12,7 +12,14 @@ public class Checkout
 
     public void Scan(string sku)
     {
-        _scannedSkus.Add(sku);
+        if (_availableItems.Any((i) => i.Sku == sku))
+        {
+            _scannedSkus.Add(sku);
+        }
+        else
+        {
+            throw new UnrecognizedItemException("Cannot recognize item Y.");
+        }
     }
 
     public decimal GetTotalPrice()

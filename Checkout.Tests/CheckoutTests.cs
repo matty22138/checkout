@@ -47,7 +47,7 @@ public class CheckoutTests
     [Test]
     public void Scan_WithUnrecognizedItem_ThrowsErrorIndicatingThatItemIsUnrecognized()
     {
-        var ex = Assert.Throws<UnrecognizedItemException>(() => _checkout.Scan("Z"));
-        Assert.That(ex.Message, Is.EqualTo("Cannot recognize item Z."));
+        var ex = Assert.Throws<UnrecognizedItemException>(() => _checkout.Scan("Y"));
+        Assert.That(ex.Message, Is.EqualTo("Cannot recognize item Y."));
     }
 }
