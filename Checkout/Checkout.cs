@@ -2,7 +2,7 @@
 
 public class Checkout
 {
-    public int Foo()
+    public int GetTotalPrice()
     {
         return 1;
     }

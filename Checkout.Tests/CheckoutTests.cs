@@ -8,9 +8,12 @@ public class CheckoutTests
     }
 
     [Test]
-    public void Test1()
+    public void GetTotalPrice_WhenNoItemsScanned_ReturnsZero()
     {
         var checkout = new Checkout();
-        Assert.That(checkout.Foo(), Is.EqualTo(1));
+
+        var total = checkout.GetTotalPrice();
+
+        Assert.That(total, Is.Zero);
     }
 }
