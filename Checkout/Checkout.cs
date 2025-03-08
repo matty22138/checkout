@@ -13,6 +13,11 @@ public class Checkout
     {
         if (_scannedItems.Any())
         {
+            if (_scannedItems.First() == "B")
+            {
+                return 30m;
+            }
+
             return 50m;
         }
 
