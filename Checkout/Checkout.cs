@@ -47,10 +47,16 @@ public class Checkout
 
     public decimal GetTotalPrice()
     {
+        var totalPrice = 0m;
+
         if (_scannedItems.Any())
         {
-            var scannedItem = _availableItems.First((i) => i.Sku == _scannedItems[0]);
-            return scannedItem.Price;
+            foreach (var sku in _scannedItems)
+            {
+                var scannedItem = _availableItems.First((i) => i.Sku == sku);
+                totalPrice += scannedItem.Price;
+            }
+            return totalPrice;
         }
 
         return 0;
