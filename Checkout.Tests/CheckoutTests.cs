@@ -16,4 +16,15 @@ public class CheckoutTests
 
         Assert.That(total, Is.Zero);
     }
+
+    [Test]
+    public void Scan_WithASingleItem_AddsItemToTheCheckout()
+    {
+        var checkout = new Checkout();
+
+        checkout.Scan("A");
+
+        var total = checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(50m));
+    }
 }
