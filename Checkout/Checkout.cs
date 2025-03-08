@@ -4,6 +4,7 @@ public class Checkout
 {
     private readonly IEnumerable<Item> _availableItems = new List<Item>();
     private readonly IList<char> _scannedSkus = new List<char>();
+    private readonly IList<Item> _scannedItems = new List<Item>();
 
     public Checkout(IEnumerable<Item> availableItems)
     {
@@ -12,13 +13,15 @@ public class Checkout
 
     public void Scan(char sku)
     {
-        if (_availableItems.Any((i) => i.Sku == sku))
+        var scannedItem = _availableItems.FirstOrDefault((i) => i.Sku == sku);
+
+        if (scannedItem == null)
         {
-            _scannedSkus.Add(sku);
+            throw new UnrecognizedItemException(sku);
         }
         else
         {
-            throw new UnrecognizedItemException(sku);
+            _scannedSkus.Add(sku);
         }
     }
 
