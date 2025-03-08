@@ -2,7 +2,7 @@
 
 public class Checkout
 {
-    public int GetTotalPrice()
+    public decimal GetTotalPrice()
     {
         return 0;
     }
