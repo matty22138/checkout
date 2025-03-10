@@ -32,14 +32,8 @@ public class Basket : IBasket
             var itemQuantity = itemGroup.Value;
             var itemDiscount = item.Discount;
 
-            if (itemDiscount != null)
-            {
-                totalPrice += CalculateDiscountedTotal(itemQuantity, item);
-            }
-            else
-            {
-                totalPrice += CalculateRegularTotal(itemQuantity, item);
-            }
+            totalPrice += itemDiscount == null ? 
+                CalculateRegularTotal(itemQuantity, item) : CalculateDiscountedTotal(itemQuantity, item);
         }
 
         return totalPrice;
