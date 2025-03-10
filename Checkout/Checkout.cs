@@ -1,47 +1,35 @@
 ﻿namespace Checkout;
 
-public class Checkout
+public class Basket
 {
-    private readonly IEnumerable<Item> _itemsOnSale = new List<Item>();
-    private readonly IDictionary<Item, int> _scannedItems = new Dictionary<Item, int>();
+    private readonly IDictionary<Item, int> _items = new Dictionary<Item, int>();
 
-    public Checkout(IEnumerable<Item> availableItems)
+    public void AddItem(Item item)
     {
-        _itemsOnSale = availableItems;
-    }
-
-    public void Scan(char sku)
-    {
-        var scannedItem = _itemsOnSale.FirstOrDefault((i) => i.Sku == sku);
-
-        if (scannedItem == null)
+        if (_items.ContainsKey(item))
         {
-            throw new UnrecognizedItemException(sku);
-        }
-
-        if (_scannedItems.ContainsKey(scannedItem))
-        {
-            _scannedItems[scannedItem] += 1;
+            _items[item] += 1;
         }
         else
         {
-            _scannedItems[scannedItem] = 1;
+            _items[item] = 1;
         }
     }
 
-    public decimal GetTotalPrice()
+    public decimal GetItemsTotal()
     {
         var totalPrice = 0m;
 
-        foreach (var itemGroup in _scannedItems)
+        foreach (var itemGroup in _items)
         {
             var scannedItem = itemGroup.Key;
             var scannedItemQuantity = itemGroup.Value;
 
             if (scannedItem.Discount != null && scannedItemQuantity >= scannedItem.Discount.QuantityThreshold)
             {
-                totalPrice += (scannedItemQuantity / (int)scannedItem.Discount.QuantityThreshold) * (decimal)scannedItem.Discount.DiscountedPrice;
-                var remainingItems = scannedItemQuantity % (int)scannedItem.Discount.QuantityThreshold;
+                totalPrice += scannedItemQuantity / scannedItem.Discount.QuantityThreshold * scannedItem.Discount.DiscountedPrice;
+
+                var remainingItems = scannedItemQuantity % scannedItem.Discount.QuantityThreshold;
                 totalPrice += scannedItem.Price * remainingItems;
             }
             else
@@ -51,5 +39,29 @@ public class Checkout
         }
 
         return totalPrice;
+    }
+}
+
+public class Checkout
+{
+    private readonly IEnumerable<Item> _itemsOnSale;
+    private readonly IDictionary<Item, int> _scannedItems = new Dictionary<Item, int>();
+    private readonly Basket _basket = new Basket();
+
+    public Checkout(IEnumerable<Item> availableItems)
+    {
+        _itemsOnSale = availableItems;
+    }
+
+    public void Scan(char sku)
+    {
+        var scannedItem = _itemsOnSale.FirstOrDefault((i) => i.Sku == sku) ?? throw new UnrecognizedItemException(sku);
+
+        _basket.AddItem(scannedItem);
+    }
+
+    public decimal GetTotalPrice()
+    {
+        return _basket.GetItemsTotal();
     }
 }
