@@ -48,8 +48,8 @@ public class Basket : IBasket
     private static decimal CalculateDiscountedTotal(int itemQuantity, Item item)
     {
         var itemDiscount = item.Discount;
-        var total = itemQuantity / itemDiscount.QuantityThreshold * itemDiscount.DiscountedPrice;
-        var remainingItems = itemQuantity % itemDiscount.QuantityThreshold;
+        var total = itemQuantity / itemDiscount.Threshold * itemDiscount.Price;
+        var remainingItems = itemQuantity % itemDiscount.Threshold;
         total += item.Price * remainingItems;
         return total;
     }

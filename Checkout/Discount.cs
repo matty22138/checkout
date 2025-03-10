@@ -1,11 +1,11 @@
 public class Discount
 {
-    public int QuantityThreshold { get; }
-    public decimal DiscountedPrice { get; }
+    public int Threshold { get; }
+    public decimal Price { get; }
 
-    public Discount(int quantityThreshold, decimal discountedPrice)
+    public Discount(int threshold, decimal price)
     {
-        QuantityThreshold = quantityThreshold;
-        DiscountedPrice = discountedPrice;
+        Threshold = threshold;
+        Price = price;
     }
 }
