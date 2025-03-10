@@ -20,6 +20,6 @@ public class Checkout
 
     public decimal GetTotalPrice()
     {
-        return _basket.GetItemsTotal();
+        return _basket.GetTotal();
     }
 }

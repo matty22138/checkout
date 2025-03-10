@@ -3,7 +3,7 @@ namespace Checkout;
 public interface IBasket
 {
     public void AddItem(Item item);
-    public decimal GetItemsTotal();
+    public decimal GetTotal();
 }
 
 public class Basket : IBasket
@@ -22,7 +22,7 @@ public class Basket : IBasket
         }
     }
 
-    public decimal GetItemsTotal()
+    public decimal GetTotal()
     {
         var totalPrice = 0m;
 
