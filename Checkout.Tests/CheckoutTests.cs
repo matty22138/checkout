@@ -86,4 +86,21 @@ public class CheckoutTests
         var total = _checkout.GetTotalPrice();
         Assert.That(total, Is.EqualTo(45m));
     }
+
+    [Test]
+    public void Scan_WhenMultipleDiscountsCanBeApplied_AppliesMultipleDiscountsToTheTotal()
+    {
+        _checkout.Scan(_itemB.Sku);
+        _checkout.Scan(_itemB.Sku);//45m
+        _checkout.Scan(_itemB.Sku);
+        _checkout.Scan(_itemB.Sku);//90m
+        _checkout.Scan(_itemA.Sku);
+        _checkout.Scan(_itemA.Sku);
+        _checkout.Scan(_itemA.Sku);//220m
+        _checkout.Scan(_itemA.Sku);//270m
+        _checkout.Scan(_itemC.Sku);//290m
+
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(290m));
+    }
 }
