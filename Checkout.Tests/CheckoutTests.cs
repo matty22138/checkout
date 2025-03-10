@@ -11,7 +11,7 @@ public class CheckoutTests
     [SetUp]
     public void Setup()
     {
-        _checkout = new Checkout([_itemA, _itemB, _itemC, _itemD]);
+        _checkout = new Checkout([_itemA, _itemB, _itemC, _itemD], new Basket());
     }
 
     [Test]
