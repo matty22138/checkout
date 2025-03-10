@@ -12,7 +12,7 @@ public class Checkout
     private readonly IEnumerable<Item> _itemsOnSale = new List<Item>();
     private readonly IEnumerable<Discount> _discounts = new List<Discount>();
     private readonly IList<Item> _scannedItems = new List<Item>();
-    private readonly IDictionary<char, int> _scannedItems2 = new Dictionary<char, int>();
+    private readonly IDictionary<Item, int> _scannedItems2 = new Dictionary<Item, int>();
 
     public Checkout(IEnumerable<Item> availableItems, IEnumerable<Discount> discounts)
     {
@@ -29,13 +29,13 @@ public class Checkout
             throw new UnrecognizedItemException(sku);
         }
 
-        if (_scannedItems2.ContainsKey(scannedItem.Sku))
+        if (_scannedItems2.ContainsKey(scannedItem))
         {
-            _scannedItems2[scannedItem.Sku] += 1;
+            _scannedItems2[scannedItem] += 1;
         }
         else
         {
-            _scannedItems2[scannedItem.Sku] = 1;
+            _scannedItems2[scannedItem] = 1;
         }
 
         _scannedItems.Add(scannedItem);
@@ -45,9 +45,14 @@ public class Checkout
     {
         var totalPrice = 0m;
 
-        foreach (var scannedItem in _scannedItems)
+        // foreach (var scannedItem in _scannedItems)
+        // {
+        //     totalPrice += scannedItem.Price;
+        // }
+
+        foreach (var scannedItem in _scannedItems2)
         {
-            totalPrice += scannedItem.Price;
+            totalPrice += scannedItem.Key.Price;
         }
 
         if (_scannedItems.Where(i => i.Sku == 'A').Count() == 3)
