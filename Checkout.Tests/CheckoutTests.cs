@@ -52,7 +52,7 @@ public class CheckoutTests
     }
 
     [Test]
-    public void Scan_WhenSpecialOfferIsMet_AppliesDiscountToTheTotal()
+    public void Scan_WhenSpecialOfferIsMetForItemA_AppliesItemADiscountToTheTotal()
     {
         _checkout.Scan(_itemA.Sku);
         _checkout.Scan(_itemA.Sku);
@@ -60,5 +60,15 @@ public class CheckoutTests
 
         var total = _checkout.GetTotalPrice();
         Assert.That(total, Is.EqualTo(130m));
+    }
+
+    [Test]
+    public void Scan_WhenSpecialOfferIsMetForItemB_AppliesItemBDiscountToTheTotal()
+    {
+        _checkout.Scan(_itemB.Sku);
+        _checkout.Scan(_itemB.Sku);
+
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(45m));
     }
 }
