@@ -2,10 +2,10 @@
 
 public class CheckoutTests
 {
-    private readonly Item _itemA = new ItemA();
-    private readonly Item _itemB = new ItemB();
-    private readonly Item _itemC = new ItemC();
-    private readonly Item _itemD = new ItemD();
+    private readonly Item _itemA = new Item('A', 50m, new Discount(3, 130m));
+    private readonly Item _itemB = new Item('B', 30m, new Discount(2, 45m));
+    private readonly Item _itemC = new Item('C', 20m);
+    private readonly Item _itemD = new Item('D', 15m);
     private Checkout _checkout;
 
     [SetUp]

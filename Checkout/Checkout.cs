@@ -38,10 +38,10 @@ public class Checkout
             var scannedItem = itemGroup.Key;
             var scannedItemQuantity = itemGroup.Value;
 
-            if (scannedItem.DiscountThreshold != null && scannedItemQuantity >= scannedItem.DiscountThreshold)
+            if (scannedItem.Discount != null && scannedItemQuantity >= scannedItem.Discount.QuantityThreshold)
             {
-                totalPrice += (scannedItemQuantity / (int)scannedItem.DiscountThreshold) * (decimal)scannedItem.DiscountPrice;
-                var remainingItems = scannedItemQuantity % (int)scannedItem.DiscountThreshold;
+                totalPrice += (scannedItemQuantity / (int)scannedItem.Discount.QuantityThreshold) * (decimal)scannedItem.Discount.DiscountedPrice;
+                var remainingItems = scannedItemQuantity % (int)scannedItem.Discount.QuantityThreshold;
                 totalPrice += scannedItem.Price * remainingItems;
             }
             else
