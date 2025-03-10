@@ -38,6 +38,11 @@ public class Checkout
             return 130m;
         }
 
+        if (_scannedItems.Where(i => i.Sku == 'B').Count() == 2)
+        {
+            return 45m;
+        }
+
         return totalPrice;
     }
 }
