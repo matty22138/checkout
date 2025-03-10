@@ -1,11 +1,19 @@
 ﻿namespace Checkout;
 
+public class Discount
+{
+    public char Sku { get; set; }
+    public int QuantityThreshold { get; set; }
+    public decimal DiscountedPrice { get; set; }
+}
+
 public class Checkout
 {
     private readonly IEnumerable<Item> _itemsOnSale = new List<Item>();
+    private readonly IEnumerable<Discount> _discounts = new List<Discount>();
     private readonly IList<Item> _scannedItems = new List<Item>();
 
-    public Checkout(IEnumerable<Item> availableItems)
+    public Checkout(IEnumerable<Item> availableItems, IEnumerable<Discount> discounts = null)
     {
         _itemsOnSale = availableItems;
     }
