@@ -40,13 +40,23 @@ public class CheckoutTests
     }
 
     [Test]
-    public void Scan_WithMultipleItems_AddsMultipleItemsAndTotalsTheirPrices()
+    public void Scan_WithMultipleOfDifferentItems_AddsMultipleItemsAndTotalsTheirPrices()
     {
         _checkout.Scan(_itemA.Sku);
         _checkout.Scan(_itemB.Sku);
 
         var total = _checkout.GetTotalPrice();
         Assert.That(total, Is.EqualTo(80m));
+    }
+
+    [Test]
+    public void Scan_WithMultipleOfTheSameItems_AddsMultipleItemsAndTotalsTheirPrices()
+    {
+        _checkout.Scan(_itemA.Sku);
+        _checkout.Scan(_itemA.Sku);
+
+        var total = _checkout.GetTotalPrice();
+        Assert.That(total, Is.EqualTo(100m));
     }
 
     [Test]
