@@ -34,16 +34,28 @@ public class Basket : IBasket
 
             if (itemDiscount != null)
             {
-                totalPrice += itemQuantity / itemDiscount.QuantityThreshold * itemDiscount.DiscountedPrice;
-                var remainingItems = itemQuantity % itemDiscount.QuantityThreshold;
-                totalPrice += item.Price * remainingItems;
+                totalPrice += CalculateDiscountedTotal(itemQuantity, item);
             }
             else
             {
-                totalPrice += item.Price * itemQuantity;
+                totalPrice += CalculateRegularTotal(itemQuantity, item);
             }
         }
 
         return totalPrice;
+    }
+
+    private static decimal CalculateDiscountedTotal(int itemQuantity, Item item)
+    {
+        var itemDiscount = item.Discount;
+        var total = itemQuantity / itemDiscount.QuantityThreshold * itemDiscount.DiscountedPrice;
+        var remainingItems = itemQuantity % itemDiscount.QuantityThreshold;
+        total += item.Price * remainingItems;
+        return total;
+    }
+
+    private static decimal CalculateRegularTotal(int itemQuantity, Item item)
+    {
+        return item.Price * itemQuantity;
     }
 }
