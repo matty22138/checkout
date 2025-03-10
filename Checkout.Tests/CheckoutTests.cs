@@ -11,12 +11,7 @@ public class CheckoutTests
     [SetUp]
     public void Setup()
     {
-        _checkout = new Checkout(
-            [_itemA, _itemB, _itemC, _itemD],
-            [
-                new Discount { Sku = 'A', DiscountedPrice = 130m, QuantityThreshold = 3 },
-                new Discount { Sku = 'B', DiscountedPrice = 45m, QuantityThreshold = 2 }
-            ]);
+        _checkout = new Checkout([_itemA, _itemB, _itemC, _itemD]);
     }
 
     [Test]
