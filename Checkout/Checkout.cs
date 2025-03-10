@@ -12,10 +12,12 @@ public class Checkout
     private readonly IEnumerable<Item> _itemsOnSale = new List<Item>();
     private readonly IEnumerable<Discount> _discounts = new List<Discount>();
     private readonly IList<Item> _scannedItems = new List<Item>();
+    private readonly IDictionary<char, int> _scannedItems2 = new Dictionary<char, int>();
 
-    public Checkout(IEnumerable<Item> availableItems, IEnumerable<Discount> discounts = null)
+    public Checkout(IEnumerable<Item> availableItems, IEnumerable<Discount> discounts)
     {
         _itemsOnSale = availableItems;
+        _discounts = discounts;
     }
 
     public void Scan(char sku)
@@ -26,10 +28,17 @@ public class Checkout
         {
             throw new UnrecognizedItemException(sku);
         }
+
+        if (_scannedItems2.ContainsKey(scannedItem.Sku))
+        {
+            _scannedItems2[scannedItem.Sku] += 1;
+        }
         else
         {
-            _scannedItems.Add(scannedItem);
+            _scannedItems2[scannedItem.Sku] = 1;
         }
+
+        _scannedItems.Add(scannedItem);
     }
 
     public decimal GetTotalPrice()
